@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+      
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+      <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+   
+    <title>造字游戏</title>
+     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.min.js"></script>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.print/1.6.0/jQuery.print.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jcanvas/21.0.1/min/jcanvas.min.js"></script>
+    <style type="text/css">
+       
+        #xixi {
+            width:400px; height: 300px; position:absolute;
+            left:1050px; top: 200px; background-color: lightcyan;
+            
+        }
+        #haha {
+            position:absolute; left:1050px; top:200px;
+            background-color: yellow; width:400px; height: 300px;
+        } 
+ 
+    </style>
+   
+    
+    
+   
+    <script type="text/javascript">
+     
+        
+        window.onload = function() {
+            var obj1 = createDraggableObject();
+            var obj2 = createDraggableObject();
+            obj1.init($('xixi'));
+            obj2.init($('haha'));
+        };
+        function $(id) {
+    return document.getElementById(id);
+}
+ 
+/**
+ * 创建可拖拽对象的工厂方法
+ */
+function createDraggableObject() {
+    return {
+        obj: null, left: 0, top: 0,
+        oldX: 0, oldY: 0, isMouseLeftButtonDown: false,
+        init: function (obj) {
+            this.obj = obj;
+			var that = this;
+            this.obj.onmousedown = function (args) {
+                var evt = args || event;
+                this.style.zIndex = 10;
+                that.isMouseLeftButtonDown = true;
+                that.oldX = evt.clientX;
+                that.oldY = evt.clientY;
+				if (this.currentStyle) {
+                    that.left = parseInt(this.currentStyle.left);
+                    that.top = parseInt(this.currentStyle.top);
+                }
+                else {
+                    var divStyle = document.defaultView.getComputedStyle(this, null);
+                    that.left = parseInt(divStyle.left);
+                    that.top = parseInt(divStyle.top);
+                }
+            };
+            this.obj.onmousemove = function (args) {
+                that.move(args || event);
+            };
+            this.obj.onmouseup = function () {
+                that.isMouseLeftButtonDown = false;
+                this.style.zIndex = 0;
+            };
+        },
+        move: function (evt) {
+            if (this.isMouseLeftButtonDown) {
+                var dx = parseInt(evt.clientX - this.oldX);
+                var dy = parseInt(evt.clientY - this.oldY);
+                this.obj.style.left = (this.left + dx) + 'px';
+                this.obj.style.top = (this.top + dy) + 'px';
+            }
+        }
+    };
+}
+
+    </script>
+ 
+    <style>
+       
+      
+        #bg_canvas {
+            position: absolute;
+            z-index: 500;
+            left: 0;
+            top: 0;
+        }
+    </style>
+</head>
+<body>
+<!--    <div id="xixi">Fuck!</div>-->
+  
+    <div id="menu" style="background-color:#FFD700;height:1000px;width:1500px;float:left;">
+        <img src="./tianzige.png" height='1000px'  width='1000px'/>
+    </div>
+
+    <div id="content" style="background-color:#EEEEEE;height:1000px;width:500px;float:left;">
+
+
+   
+<img src='./mu.png' id="xixi" style='display:none' width="160px" hight="200px">  
+    <img src='./zi.png' id="haha" style='display:none' width="160px" hight="200px">  
+    
+        
+        
+    <button type="button" id="button_mu">
+<!--        <img src="http://127.0.0.1:52333/mu.png" height='50px'  width='50px'/>-->
+    <style>
+         *{ margin:0; padding:0;}
+ul,li{ list-style:none; margin:0; padding:0;}
+.brandsShow{ width:1200px; height:620px; margin:0 auto; }
+.brandsShow ul{ margin-left:0px; width:1225px; height:auto; }
+.brandsShow ul li{ float:left; display:inline; width:100px; height:200px; }
+.flip-container {perspective: 1000;
+-webkit-perspective: 1000px; /*父类容器中 perspective 子类允许透视*/
+-moz-perspective: 1000px;
+-ms-perspective: 1000px;
+-o-perspective: 1000px;
+perspective: 1000px;
+margin:0px auto; float:left; margin-left:0px; margin-bottom:0px; border:1px solid #fff;}
+.flip-container:hover .back {transform: rotateY(0deg); -webkit-transform: rotateY(0deg);-moz-transform: rotateY(0deg);-ms-transform: rotateY(0deg);-o-transform: rotateY(0deg); z-index:2;}
+.flip-container:hover .front { transform: rotateY(180deg);-webkit-transform: rotateY(180deg);-moz-transform: rotateY(180deg);-ms-transform: rotateY(180deg);-o-transform: rotateY(180deg); z-index:1}
+        
+.flip-container, .front, .back {width: 100px;height: 200px;}
+.flipper {transition:transform 0.6s ease-out;
+transition: transform .5s ease-in-out;
+-webkit-transition: transform .5s ease-in-out;
+-moz-transition: transform .5s ease-in-out;
+-ms-transition: transform .5s ease-in-out;
+-o-transition: transform .5s ease-in-out;
+-webkit-transform-style: preserve-3d; /*使其子类变换后得以保留 3d转换后的位置*/
+-moz-transform-style: preserve-3d;
+-ms-transform-style: preserve-3d;
+-o-transform-style: preserve-3d;
+transform-style: preserve-3d;
+display:block;position: relative;}
+.front, .back {backface-visibility: hidden;transition: 0.6s ease-out;-webkit-transition: .6s ease-out; -webkit-transform-style: preserve-3d; -moz-transform-style: preserve-3d; -ms-transform-style: preserve-3d;-o-transform-style: preserve-3d;transform-style: preserve-3d;position: absolute;top: 0;left: 0;}
+.front img, .back img{ width:100px; height:200px; overflow:hidden;}
+        
+.front {z-index: 2;transform: rotateY(0deg);transform: rotateY(0deg); -webkit-transform: rotateY(0deg);-moz-transform: rotateY(0deg);-ms-transform: rotateY(0deg);-o-transform: rotateY(0deg);}
+.back { z-index:1;transform: rotateY(-180deg);transform: rotateY(-180deg);-webkit-transform: rotateY(-180deg);-moz-transform: rotateY(-180deg);
+-ms-transform: rotateY(-180deg);-o-transform: rotateY(-180deg);}
+        </style>
+        <ul>
+<li class="flip-container " ontouchstart="this.classList.toggle('hover');">
+<a class="flipper">
+<div class="front "><img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/emojidex/112/smiling-face-with-open-mouth_1f603.png"></div>
+<div class="back " ><img src= "./mu.png"></div>
+</a>
+</li>
+
+</ul>
+    </button>
+    
+    
+    
+    <button type="button" id="button_zi" >
+          <style>
+         *{ margin:0; padding:0;}
+ul,li{ list-style:none; margin:0; padding:0;}
+.brandsShow{ width:1200px; height:620px; margin:0 auto; }
+.brandsShow ul{ margin-left:0px; width:1225px; height:auto; }
+.brandsShow ul li{ float:left; display:inline; width:50px; height:50px; }
+.flip-container {perspective: 1000;
+-webkit-perspective: 1000px; /*父类容器中 perspective 子类允许透视*/
+-moz-perspective: 1000px;
+-ms-perspective: 1000px;
+-o-perspective: 1000px;
+perspective: 1000px;
+margin:0px auto; float:left; margin-left:0px; margin-bottom:0px; border:1px solid #fff;}
+.flip-container:hover .back {transform: rotateY(0deg); -webkit-transform: rotateY(0deg);-moz-transform: rotateY(0deg);-ms-transform: rotateY(0deg);-o-transform: rotateY(0deg); z-index:2;}
+.flip-container:hover .front { transform: rotateY(180deg);-webkit-transform: rotateY(180deg);-moz-transform: rotateY(180deg);-ms-transform: rotateY(180deg);-o-transform: rotateY(180deg); z-index:1}
+.flip-container, .front, .back {width: 50px;height: 50px;}
+.flipper {transition:transform 0.6s ease-out;
+transition: transform .5s ease-in-out;
+-webkit-transition: transform .5s ease-in-out;
+-moz-transition: transform .5s ease-in-out;
+-ms-transition: transform .5s ease-in-out;
+-o-transition: transform .5s ease-in-out;
+-webkit-transform-style: preserve-3d; /*使其子类变换后得以保留 3d转换后的位置*/
+-moz-transform-style: preserve-3d;
+-ms-transform-style: preserve-3d;
+-o-transform-style: preserve-3d;
+transform-style: preserve-3d;
+display:block;position: relative;}
+.front, .back {backface-visibility: hidden;transition: 0.6s ease-out;-webkit-transition: .6s ease-out; -webkit-transform-style: preserve-3d; -moz-transform-style: preserve-3d; -ms-transform-style: preserve-3d;-o-transform-style: preserve-3d;transform-style: preserve-3d;position: absolute;top: 0;left: 0;}
+.front img, .back img{ width:50px; height:50px; overflow:hidden;}
+.front {z-index: 2;transform: rotateY(0deg);transform: rotateY(0deg); -webkit-transform: rotateY(0deg);-moz-transform: rotateY(0deg);-ms-transform: rotateY(0deg);-o-transform: rotateY(0deg);}
+.back { z-index:1;transform: rotateY(-180deg);transform: rotateY(-180deg);-webkit-transform: rotateY(-180deg);-moz-transform: rotateY(-180deg);
+-ms-transform: rotateY(-180deg);-o-transform: rotateY(-180deg);}
+        </style>
+        <ul>
+<li class="flip-container " ontouchstart="this.classList.toggle('hover');">
+<a class="flipper">
+<div class="front "><img src="https://emojipedia-us.s3.dualstack.us-west-1.amazonaws.com/thumbs/72/emojidex/112/smiling-face-with-open-mouth_1f603.png"></div>
+<div class="back " ><img src="./zi.png"></div>
+</a>
+</li>
+
+</ul>
+    </button>
+    </div>
+    
+    <!--截图开始-->
+    <button type="button" id="shot" style="width:150px; height:100px">开始截图</button>
+    <button type="button" id="clear" style="width:150px; height:100px">清除全部</button>
+    <canvas id="bg_canvas" width="200px" height="200px" />
+    
+    
+
+    <script>
+        
+        var clickButton_shot = document.getElementById('shot');
+    clickButton_shot.addEventListener('click',buttonClick_shot);
+  //    var clientWidth = document.documentElement.clientWidth || document.body.clientWidth
+  //      var clientHeight = document.documentElement.clientHeight || document.body.clientHeight
+        // 更新canvas宽高
+        $("#bg_canvas").attr("width", 200);
+        $("#bg_canvas").attr("height", 200);
+        $("#bg_canvas").hide();
+          
+    function buttonClick_shot(){
+        
+           // 把body转成canvas
+            html2canvas(document.body, {
+                scale: 1,
+                // allowTaint: true,
+                useCORS: true  //跨域使用
+            }).then(canvas => {
+             
+                printClip(canvas, 0, 0, 1000, 1000)
+            });
+      }
+ 
+
+function printClip(canvas, capture_x, capture_y, capture_width, capture_height) {
+    // 创建一个用于截取的canvas
+    var clipCanvas = document.createElement('canvas')
+    clipCanvas.width = 250
+    clipCanvas.height = 250
+    // 截取
+    clipCanvas.getContext('2d').drawImage(canvas, capture_x, capture_y, capture_width, capture_height, 0, 0, 200, 200)
+    var clipImgBase64 = clipCanvas.toDataURL()
+    // 生成图片
+    var clipImg = new Image()
+    clipImg.src = clipImgBase64
+
+    document.body.appendChild(clipImg);
+}
+
+
+    </script>
+    
+    
+    
+    
+    <script>
+         var clickButton_clear = document.getElementById('clear');
+    clickButton_clear.addEventListener('click',buttonClick_clear);
+   
+    function buttonClick_clear(){
+       var obj = document.getElementById('menu');
+        obj.innerHTML='';
+        console.log(123)
+      //  obj.innerHTML='<div><img src="./tianzige.png" width="1000px" height="1000px"/></div>';
+        console.log(456)
+  }
+          
+        
+         var clickButton0 = document.getElementById('button_mu');
+    clickButton0.addEventListener('click',buttonClick0);
+  
+    function buttonClick0(){
+        var x = document.getElementById("xixi");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+        
+     }
+          var clickButton = document.getElementById('button_zi');
+    clickButton.addEventListener('click',buttonClick);
+     function buttonClick(){
+          var x = document.getElementById("haha");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+        
+     }
+ 
+    </script>
+
+</body>
+</html>
+
