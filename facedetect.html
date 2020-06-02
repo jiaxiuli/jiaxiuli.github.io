@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+<meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+      <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+<title>Face Recognition and Processing</title>
+
+<link rel="stylesheet" href="css/bootstrap0.css">
+<link rel="stylesheet" href="css/style0.css">
+
+</head>
+<body>
+
+<div id="wrapper">
+	<div class="overlay"></div>
+
+	<!-- Sidebar -->
+	<nav class="navbar navbar-inverse navbar-fixed-top" id="sidebar-wrapper" role="navigation">
+		<ul class="nav sidebar-nav">
+			<li class="sidebar-brand">
+				<a href="#">
+				  Face Recognition
+				</a>
+			</li>
+			<li>
+				<a href="#">Face Detect</a>
+			</li>
+			<li>
+				<a href="#">(Still Developing...)</a>
+			</li>
+			<li>
+				<a href="#">(Still Developing...)</a>
+			</li>
+			<li>
+				<a href="#">(Still Developing...)</a>
+			</li>
+			
+		
+		</ul>
+	</nav>
+	<!-- /#sidebar-wrapper -->
+
+	<!-- Page Content -->
+	<div id="page-content-wrapper">
+	  <button type="button" class="hamburger is-closed animated fadeInLeft" data-toggle="offcanvas">
+		<span class="hamb-top"></span>
+		<span class="hamb-middle"></span>
+		<span class="hamb-bottom"></span>
+	  </button>
+		<div class="container">
+			
+					<h1  style="margin-top: 0px">Face Detect</h1>
+               
+              
+                <div id="photoarea" style="width:550px; height:700px; background-color:gold; float:left; border: 3px dashed orange" align="center">
+                  <a style="display:block; height: 400px">  
+                      <style>
+                          .div-relative{position:relative; color:#000; border:1px solid #000; width:500px; height:400px} 
+                          .div-a{position: absolute;  margin-top: 30px; z-index: 1; margin-left: -200px;  background-size: 400px 400px;} 
+                          .div-b{position: absolute; margin-left: -200px; background-size: 400px 400px; margin-top: 30px;  background-color: rgba(1, 1, 1, 0.7); z-index: 2; visibility: hidden;}
+                          .div-c{position: relative; width:100px; height:100px; margin-top: 30px; background-color: rgba(0, 0, 0, 0); z-index: 3; visibility: hidden; }
+                          .div-d{position: relative; width:200px; height:100px; margin-top: 60px; background-color: rgba(0, 0, 0, 0.8); z-index: 4; visibility: hidden;}
+                      </style>
+                      
+                      <canvas id="photo" width="400" height="400" class = "div-a"></canvas>
+                      <div id="mask" width="400" height="400" class="div-b" ></div>
+                      <div id="load" class="div-c"><div class="loadingio-spinner-spinner-2in8yzk3lfh"><div class="ldio-11fdm5jstlk">
+<div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div>
+</div></div>
+<style type="text/css">
+@keyframes ldio-11fdm5jstlk {
+  0% { opacity: 1 }
+  100% { opacity: 0 }
+}
+.ldio-11fdm5jstlk div {
+  left: 40px;
+  top: 0px;
+  position: absolute;
+  animation: ldio-11fdm5jstlk linear 1.0526315789473684s infinite;
+  background: #ffffff;
+  width: 15.86px;
+  height: 15.86px;
+  border-radius: 7.93px / 7.93px;
+  transform-origin: 7.93px 32.33px;
+}.ldio-11fdm5jstlk div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -0.9210526315789473s;
+  background: #ffffff;
+}.ldio-11fdm5jstlk div:nth-child(2) {
+  transform: rotate(45deg);
+  animation-delay: -0.7894736842105262s;
+  background: #ffffff;
+}.ldio-11fdm5jstlk div:nth-child(3) {
+  transform: rotate(90deg);
+  animation-delay: -0.6578947368421052s;
+  background: #ffffff;
+}.ldio-11fdm5jstlk div:nth-child(4) {
+  transform: rotate(135deg);
+  animation-delay: -0.5263157894736842s;
+  background: #ffffff;
+}.ldio-11fdm5jstlk div:nth-child(5) {
+  transform: rotate(180deg);
+  animation-delay: -0.3947368421052631s;
+  background: #ffffff;
+}.ldio-11fdm5jstlk div:nth-child(6) {
+  transform: rotate(225deg);
+  animation-delay: -0.2631578947368421s;
+  background: #ffffff;
+}.ldio-11fdm5jstlk div:nth-child(7) {
+  transform: rotate(270deg);
+  animation-delay: -0.13157894736842105s;
+  background: #ffffff;
+}.ldio-11fdm5jstlk div:nth-child(8) {
+  transform: rotate(315deg);
+  animation-delay: 0s;
+  background: #ffffff;
+}
+.loadingio-spinner-spinner-2in8yzk3lfh {
+ margin-top: 180px;
+  width: 122px;
+  height: 122px;
+  display: inline-block;
+  overflow: hidden;
+  background: rgba(0,0,0,0);
+}
+.ldio-11fdm5jstlk {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform: translateZ(0) scale(1);
+  backface-visibility: hidden;
+  transform-origin: 0 0; /* see note above */
+}
+.ldio-11fdm5jstlk div { box-sizing: content-box; }
+/* generated by https://loading.io/ */
+</style></div>
+                      <div id="fail" class="div-d"></div>
+                      
+                      </a>
+                    
+                    
+                    <a style="display:block; height: 100px; margin-top: 60px" align="center"> 
+                    <button id="pic1" style="width:100px; height:100px; background-image: url('https://cdn.faceplusplus.com.cn/mc-official/scripts/demoScript/images/demo-pic1.jpg');background-size:100px 100px; margin-left: 0px; " onclick="go('https://cdn.faceplusplus.com.cn/mc-official/scripts/demoScript/images/demo-pic1.jpg')"></button>
+                        
+                    <button style="width:100px; height:100px; background-image: url('https://cdn.faceplusplus.com.cn/mc-official/scripts/demoScript/images/demo-pic6.jpg');background-size:100px 100px; margin-left: 20px;" onclick="go('https://cdn.faceplusplus.com.cn/mc-official/scripts/demoScript/images/demo-pic6.jpg')"></button>
+                        
+                    <button style="width:100px; height:100px; background-image: url('https://www.faceplusplus.com.cn/scripts/demoScript/images/demo-pic10.jpg');background-size:100px 100px; margin-left: 20px; " onclick="go('https://www.faceplusplus.com.cn/scripts/demoScript/images/demo-pic10.jpg')"></button>
+                        
+                    <button style="width:100px; height:100px; background-image: url('https://www.faceplusplus.com.cn/scripts/demoScript/images/demo-pic8.jpg');background-size:100px 100px; margin-left: 20px; " onclick="go('https://www.faceplusplus.com.cn/scripts/demoScript/images/demo-pic8.jpg')"></button>
+                    </a>
+                    
+                     
+                     
+                       
+                <a style="display:block; height: 20px; margin-left: 72px; margin-top: 10px;" align="center">
+                    
+            <input id="image_upload"  style="float: left" type="file" accept="image/*" name="file" id="file"/>
+           
+                           </a>
+        
+
+                          <script>
+                    
+    var fileInput = document.getElementById("image_upload");
+    //选择文件
+    fileInput.addEventListener('change',function(){
+        //如果未传入文件则中断
+        if(fileInput.files[0] == undefined){
+            return;
+        }
+
+        var file = fileInput.files[0];
+        //FileReader可直接将上传文件转化为二进制流
+        var reader = new FileReader();
+        reader.readAsDataURL(file);//转化二进制流，异步方法
+        reader.onload = function(){//完成后this.result为二进制流
+            //页面显示文件名
+            $("#name").html(file.name);
+            var base64Str = this.result;
+      
+            var startNum = base64Str.indexOf("base64,");
+            startNum = startNum*1 + 7;
+            //去除前部格式信息（如果有需求）
+            var baseStr = base64Str.slice(startNum);
+            //临时存储二进制流
+         
+           goFile(encodeURIComponent(baseStr), base64Str);
+            
+        }  
+    })
+                    
+        </script>
+                    
+                   <a  style="display:block; height: 100px; " align="center"> 
+                         <input placeholder="Input the URL of a photo" style="width:300px; height:40px; 
+                        margin-top: 10px; z-index: 999!important; margin-left: 0px; font-size: large; font-family: times" value="" id="inputurl" />
+                           
+                         <button style="width:100px; height:40px; 
+                       margin-top: 10px;z-index: 999!important; margin-left: 0px" onclick = "getInputUrl()">Detect</button>
+                    </a>
+                   </div>
+                 
+                <div style="width:550px; height:700px; background-color:gold; float:right; border: 3px dashed blue" >
+                    <div id="dataarea" style="width:500px; height:650px; background-color:gold; margin-left: 25px; margin-top: 25px"></div>
+                   </div>
+              
+            
+                    
+                    <script> 
+                        
+                        
+                        go('https://cdn.faceplusplus.com.cn/mc-official/scripts/demoScript/images/demo-pic1.jpg');
+                        
+                         function select(data, url){
+                var canvasDom = document.getElementById("photo");
+                canvasDom.style.backgroundImage="url("+url+")";
+                var context = canvasDom.getContext('2d');
+                context.strokeStyle = "red";
+                context.clearRect(0,0,400,400);             
+                var bigImg = document.createElement("img");	
+                    bigImg.src=url;
+                    var rate_row;
+                    var rate_colum;
+                    bigImg.onload=function(){
+                    var originalWidth = bigImg.width;
+                    var originalHeight = bigImg.height;
+                      
+                    var rate = originalWidth/originalHeight;
+                     if(bigImg.width >  bigImg.height ){
+                        bigImg.width = "400";
+                        bigImg.height = 400/rate;
+                    }else if( bigImg.width < bigImg.height ){
+                        bigImg.height = "400";
+                        bigImg.width = 400*rate;
+                    }else{
+                         bigImg.width="400";  //320个像素 不用加px	
+                         bigImg.height="400";
+                    }     
+                        
+                //    context.drawImage(bigImg, 0 ,0, bigImg.width, bigImg.height);   
+                        
+                    rate_row = bigImg.width/originalWidth;
+                    rate_colum = bigImg.height/originalHeight;
+                        
+                canvasDom.style.width = bigImg.width+"px";
+                canvasDom.style.height = bigImg.height+"px";
+                canvasDom.style.left = 373+(550-bigImg.width)/2+"px";
+                        
+                 var mask = document.getElementById("mask");
+                 mask.style.width = bigImg.width+"px";
+                mask.style.height = bigImg.height+"px";
+                mask.style.left = 373+(550-bigImg.width)/2+"px";
+                canvasDom.style.backgroundSize = bigImg.width+"px "+bigImg.height+"px";
+                
+                var different;
+                if( bigImg.width > bigImg.height ){
+                    different = 400/bigImg.height;
+                     var a = document.createElement("a");
+                for( i = 0 ; i < data.faces.length ; i++ ){     
+                context.strokeRect(data.faces[i].face_rectangle.left*rate_row, 
+                                   data.faces[i].face_rectangle.top*rate_colum*different, 
+                                   data.faces[i].face_rectangle.width*rate_row, 
+                                   data.faces[i].face_rectangle.height*rate_colum*different);
+                }
+                }else if( bigImg.width < bigImg.height ){
+                     different = 400/bigImg.width;
+                    for( i = 0 ; i < data.faces.length ; i++ ){     
+                context.strokeRect(data.faces[i].face_rectangle.left*rate_row*different, 
+                                   data.faces[i].face_rectangle.top*rate_colum, 
+                                   data.faces[i].face_rectangle.width*rate_row*different, 
+                                   data.faces[i].face_rectangle.height*rate_colum);
+                }
+                }else{
+                    for( i = 0 ; i < data.faces.length ; i++ ){     
+                context.strokeRect(data.faces[i].face_rectangle.left*rate_row, 
+                                   data.faces[i].face_rectangle.top*rate_colum, 
+                                   data.faces[i].face_rectangle.width*rate_row, 
+                                   data.faces[i].face_rectangle.height*rate_colum);
+                } 
+                }
+                 for( i = 0 ; i < data.faces.length ; i++ ){ 
+                var clipCanvas = document.createElement('canvas')
+                clipCanvas.width =  data.faces[i].face_rectangle.width*rate_row;
+                clipCanvas.height = data.faces[i].face_rectangle.height*rate_colum;
+    
+                clipCanvas.getContext('2d').drawImage(photo, data.faces[i].face_rectangle.left*rate_row, data.faces[i].face_rectangle.top*rate_colum,  data.faces[i].face_rectangle.width*rate_row,  data.faces[i].face_rectangle.height*rate_colum)
+                var clipImgBase64 = clipCanvas.toDataURL()
+             //   console.log(clipImgBase64)
+                var clipImg = new Image()
+                clipImg.src = clipImgBase64
+                 }
+                    }
+                         }
+  
+                function getInputUrl(){
+                    var value = document.getElementById("inputurl").value
+                 //   console.log(value);
+//                    displayInput(value);
+                    var reg = /^\s*data:([a-z]+\/[a-z0-9-+.]+(;[a-z-]+=[a-z0-9-]+)?)?(;base64)?,([a-z0-9!$&',()*+;=\-._~:@\/?%\s]*?)\s*$/i;
+
+                    if(reg.test(value)){
+                    console.log(value); // 如果是base64格式输出该base64
+                    var startNum = value.indexOf("base64,");
+                    startNum = startNum*1 + 7;
+                    var baseStr = value.slice(startNum);
+                    goFile(encodeURIComponent(baseStr), value);
+                    }else{
+                       toDataURL(value, function(dataUrl) {
+                            var startNum = dataUrl.indexOf("base64,");
+                    startNum = startNum*1 + 7;
+                    var baseStr = dataUrl.slice(startNum);
+                    goFile(encodeURIComponent(baseStr), dataUrl);
+                       })
+                      
+                       
+                    }
+                   
+                }   
+                        
+                function toDataURL(url, callback) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.onload = function() {
+                    var reader = new FileReader();
+                    reader.onloadend = function() {
+                    callback(reader.result);
+                    }
+                    reader.readAsDataURL(xhr.response);
+                    };
+                    xhr.open('GET', url);
+                    xhr.responseType = 'blob';
+                    xhr.send();
+                    }
+                        
+                function processing(){
+                    document.getElementById("mask").style.visibility="visible";
+                    document.getElementById("load").style.visibility="visible";
+                }         
+                function finishProcess(){
+                     document.getElementById("mask").style.visibility="hidden";
+                    document.getElementById("load").style.visibility="hidden";
+                }
+
+                    function go(image_url){
+                        document.getElementById("fail").style.visibility="hidden";
+                        processing();
+                   var postData = 'api_key=xs9igyds7LzSoH-Z_iMoOCj-QfM2K686&api_secret=YI8nc2vQhtEue2nQDCn3zoUTIVX127Bd'                    
+                   + '&image_url='+image_url + '&return_attributes=gender,age,smiling,headpose,facequality,blur,eyestatus,emotion,ethnicity,beauty,mouthstatus,eyegaze,skinstatus';       
+                        $.ajax({      
+                            dataType: 'json',            
+                            type: 'POST' ,            
+                            url: 'https://api-cn.faceplusplus.com/facepp/v3/detect',            
+                            data: postData,            
+                            success: function(response){ 
+                                select(response, image_url);
+                                console.log(response);
+                                getjson(response);
+                                finishProcess();
+                            },            
+                            error: function(error){                
+                                 console.log(error);  // todo: 在这里添加上传失败的逻辑    
+                                console.log(error.status);
+                                 errorProcess(error.status);
+                            }      
+                        });
+                    }
+                        
+                        
+                    function goFile(file, file_raw){
+                        document.getElementById("fail").style.visibility="hidden";
+                        processing();
+                   var postData = 'api_key=xs9igyds7LzSoH-Z_iMoOCj-QfM2K686&api_secret=YI8nc2vQhtEue2nQDCn3zoUTIVX127Bd'                    
+                   + '&image_base64='+file+ '&return_attributes=gender,age,smiling,headpose,facequality,blur,eyestatus,emotion,ethnicity,beauty,mouthstatus,eyegaze,skinstatus';       
+                        $.ajax({      
+                            dataType: 'json',            
+                            type: 'POST' ,            
+                            url: 'https://api-cn.faceplusplus.com/facepp/v3/detect',            
+                            data: postData,            
+                            success: function(response){ 
+                                select(response, file_raw);
+                                console.log(response);
+                                getjson(response);
+                                finishProcess();
+                            },            
+                            error: function(error){                
+                                 console.log(error);  // todo: 在这里添加上传失败的逻辑               
+                                 console.log(error.status);
+                                 errorProcess(error.status);
+                            }      
+                        });
+                    }    
+                    
+                        
+                    function errorProcess(status){
+                     //   finishProcess();
+                        
+                        document.getElementById("fail").style.visibility="visible";
+                        document.getElementById('dataarea').innerHTML = "";
+                        document.getElementById('fail').innerHTML = "";
+                        var message = document.createElement("p");
+                        if( status == 400 )
+                            message.innerHTML = "<font size=5>Detect Failed."+'<br>'+ "Please upload a correct image."
+                        if( status == 412 )
+                            message.innerHTML = "<font size=5>image loading time out."+'<br>'+"should be finished in 30 seconds. "
+                        else
+                             message.innerHTML = "<font size=5>Somethins wrong!"+'<br>'+"Please try another image. "
+                        document.getElementById('fail').appendChild(message);
+                    }   
+                        
+                        
+                    function getjson(data){
+                         document.getElementById('dataarea').innerHTML = "";
+                        console.log(data.faces[0].attributes);
+                        for( i = 0 ; i < data.faces.length ; i++ ){
+                            
+                            
+                             var text = document.createElement("p");
+                             text.innerHTML = "<font size=4 color=black>age: "+data.faces[i].attributes.age.value
+                                +'<br>';
+                             document.getElementById("dataarea").appendChild(text);
+                            
+                            var text0 = document.createElement("p");
+                            text0.innerHTML = "<font size=4 color=black>gender: "+data.faces[i].attributes.gender.value+'<br>';
+                            document.getElementById("dataarea").appendChild(text0);
+                            
+                            var text1 = document.createElement("p");
+                            if(data.faces[i].attributes.gender.value == 'Male')
+                                text1.innerHTML = "<font size=4 color=black>beauty: "+data.faces[i].attributes.beauty.male_score+'<br>';
+                            else
+                                text1.innerHTML = "<font size=4 color=black>beauty: "+data.faces[i].attributes.beauty.female_score+'<br>';
+                              document.getElementById("dataarea").appendChild(text1);
+                            
+                             var text2 = document.createElement("p");
+                            if( data.faces[i].attributes.glass.value == 'None')
+                                 text2.innerHTML = "<font size=4 color=black>glass: "+"no"+'<br>'+'<br>';
+                            else
+                                text2.innerHTML = "<font size=4 color=black>glass: "+"yes"+'<br>'+'<br>';
+                              document.getElementById("dataarea").appendChild(text2);
+
+                        }
+                        
+                    }
+
+                    </script>
+
+		</div> 
+	</div>
+     
+                    
+                    
+	<!-- /#page-content-wrapper -->
+
+</div>
+<!-- /#wrapper -->
+    
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+	  var trigger = $('.hamburger'),
+		  overlay = $('.overlay'),
+		 isClosed = false;
+
+		trigger.click(function () {
+		  hamburger_cross();      
+		});
+
+		function hamburger_cross() {
+
+		  if (isClosed == true) {          
+			overlay.hide();
+			trigger.removeClass('is-open');
+			trigger.addClass('is-closed');
+			isClosed = false;
+		  } else {   
+			overlay.show();
+			trigger.removeClass('is-closed');
+			trigger.addClass('is-open');
+			isClosed = true;
+		  }
+	  }
+	  
+	  $('[data-toggle="offcanvas"]').click(function () {
+			$('#wrapper').toggleClass('toggled');
+	  });  
+	});
+</script>
+
+
+</body>
+</html>
