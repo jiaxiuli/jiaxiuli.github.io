@@ -11,8 +11,8 @@
       <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <title>Face Recognition and Processing</title>
 
-<link rel="stylesheet" href="jiaxiuli.github.io/bootstrap0.css">
-<link rel="stylesheet" href="jiaxiuli.github.io/style0.css">
+<link rel="stylesheet" href="css/bootstrap0.css">
+<link rel="stylesheet" href="css/style0.css">
 
 </head>
 <body>
@@ -58,14 +58,14 @@
 					<h1  style="margin-top: 0px">Face Detect</h1>
                
                 <p>This project is still developing. URL for some images are unable to load probably, because of the CORS policy. Upload your local picture is recommended.</p>
-                <div id="photoarea" style="width:550px; height:700px; background-color:gold; float:left; border: 3px dashed orange" align="center">
+                <div id="photoarea" style="position: relative; width:550px; height:700px; background-color:gold; float:left; border: 3px dashed orange" align="center">
                   <a style="display:block; height: 400px">  
                       <style>
                           .div-relative{position:relative; color:#000; border:1px solid #000; width:500px; height:400px} 
-                          .div-a{position: absolute;  margin-top: 30px; z-index: 1; margin-left: -200px;  background-size: 400px 400px;} 
-                          .div-b{position: absolute; margin-left: -200px; background-size: 400px 400px; margin-top: 30px;  background-color: rgba(1, 1, 1, 0.7); z-index: 2; visibility: hidden;}
-                          .div-c{position: relative; width:100px; height:100px; margin-top: 30px; background-color: rgba(0, 0, 0, 0); z-index: 3; visibility: hidden; }
-                          .div-d{position: relative; width:200px; height:100px; margin-top: 60px; background-color: rgba(0, 0, 0, 0.8); z-index: 4; visibility: hidden;}
+                          .div-a{position: absolute;  margin-top: 20px; z-index: 1;  background-size: 400px 400px;} 
+                          .div-b{position: absolute;  background-size: 400px 400px; margin-top: 20px;  background-color: rgba(1, 1, 1, 0.7); z-index: 2; visibility: hidden;}
+                          .div-c{position: relative; width:100px; height:100px; margin-top: 20px; background-color: rgba(0, 0, 0, 0); z-index: 3; visibility: hidden; }
+                          .div-d{position: relative; width:200px; height:140px; margin-top: 40px; background-color: rgba(0, 0, 0, 0.8); z-index: 4; visibility: hidden;}
                       </style>
                       
                       <canvas id="photo" width="400" height="400" class = "div-a"></canvas>
@@ -250,12 +250,12 @@
                         
                 canvasDom.style.width = bigImg.width+"px";
                 canvasDom.style.height = bigImg.height+"px";
-                canvasDom.style.left = 373+(550-bigImg.width)/2+"px";
+                canvasDom.style.left = (550-bigImg.width)/2+"px";
                         
                  var mask = document.getElementById("mask");
                  mask.style.width = bigImg.width+"px";
                 mask.style.height = bigImg.height+"px";
-                mask.style.left = 373+(550-bigImg.width)/2+"px";
+                mask.style.left =(550-bigImg.width)/2+"px";
                 canvasDom.style.backgroundSize = bigImg.width+"px "+bigImg.height+"px";
                 
                 var different;
@@ -397,8 +397,8 @@
                             }      
                         });
                     }    
-                    
-                        
+                   
+                     
                     function errorProcess(status){
                      //   finishProcess();
                         
@@ -407,11 +407,11 @@
                         document.getElementById('fail').innerHTML = "";
                         var message = document.createElement("p");
                         if( status == 400 )
-                            message.innerHTML = "<font size=5>Detect Failed."+'<br>'+ "Please upload a correct image."
+                            message.innerHTML = "<font size=5 color=silver>Detect Failed."+'<br>'+ "Please upload a correct image."
                         if( status == 412 )
-                            message.innerHTML = "<font size=5>image loading time out."+'<br>'+"should be finished in 30 seconds. "
+                            message.innerHTML = "<font size=5 color=silver>image loading time out."+'<br>'+"should be finished in 30 seconds. "
                         else
-                             message.innerHTML = "<font size=5>Somethins wrong!"+'<br>'+"Please try another image. "
+                             message.innerHTML = "<font size=4 color=silver>Somethins wrong!"+'<br>'+"Please try another image."+'<br>'+"image size limitation is 2M."
                         document.getElementById('fail').appendChild(message);
                     }   
                         
