@@ -11,8 +11,8 @@
       <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
 <title>Face Recognition and Processing</title>
 
-<link rel="stylesheet" href="jiaxiuli.github.io/bootstrap0.css">
-<link rel="stylesheet" href="jiaxiuli.github.io/style0.css">
+<link rel="stylesheet" href="css/bootstrap0.css">
+<link rel="stylesheet" href="css/style0.css">
 
 </head>
 <body>
@@ -57,7 +57,7 @@
 			
 					<h1  style="margin-top: 0px">Face Detect</h1>
                
-              
+                <p>This project is still developing. URL for some images are unable to load probably, because of the CORS policy. Upload your local picture is recommended.</p>
                 <div id="photoarea" style="width:550px; height:700px; background-color:gold; float:left; border: 3px dashed orange" align="center">
                   <a style="display:block; height: 400px">  
                       <style>
@@ -207,7 +207,7 @@
                    </div>
                  
                 <div style="width:550px; height:700px; background-color:gold; float:right; border: 3px dashed blue" >
-                    <div id="dataarea" style="width:500px; height:650px; background-color:gold; margin-left: 25px; margin-top: 25px"></div>
+                    <div id="dataarea"  style="width:500px; height:650px; background-color:gold; margin-left: 25px; margin-top: 25px; overflow-y:scroll;"></div>
                    </div>
               
             
@@ -216,7 +216,7 @@
                         
                         
                         go('https://cdn.faceplusplus.com.cn/mc-official/scripts/demoScript/images/demo-pic1.jpg');
-                        
+                       
                          function select(data, url){
                 var canvasDom = document.getElementById("photo");
                 canvasDom.style.backgroundImage="url("+url+")";
@@ -284,21 +284,23 @@
                                    data.faces[i].face_rectangle.height*rate_colum);
                 } 
                 }
-                 for( i = 0 ; i < data.faces.length ; i++ ){ 
-                var clipCanvas = document.createElement('canvas')
-                clipCanvas.width =  data.faces[i].face_rectangle.width*rate_row;
-                clipCanvas.height = data.faces[i].face_rectangle.height*rate_colum;
-    
-                clipCanvas.getContext('2d').drawImage(photo, data.faces[i].face_rectangle.left*rate_row, data.faces[i].face_rectangle.top*rate_colum,  data.faces[i].face_rectangle.width*rate_row,  data.faces[i].face_rectangle.height*rate_colum)
-                var clipImgBase64 = clipCanvas.toDataURL()
-             //   console.log(clipImgBase64)
-                var clipImg = new Image()
-                clipImg.src = clipImgBase64
-                 }
+//                 for( i = 0 ; i < data.faces.length ; i++ ){ 
+//                var clipCanvas = document.createElement('canvas')
+//                clipCanvas.width =  data.faces[i].face_rectangle.width*rate_row;
+//                clipCanvas.height = data.faces[i].face_rectangle.height*rate_colum;
+//    
+//                clipCanvas.getContext('2d').drawImage(photo, data.faces[i].face_rectangle.left*rate_row, data.faces[i].face_rectangle.top*rate_colum,  data.faces[i].face_rectangle.width*rate_row,  data.faces[i].face_rectangle.height*rate_colum)
+//                var clipImgBase64 = clipCanvas.toDataURL()
+//             //   console.log(clipImgBase64)
+//                var clipImg = new Image()
+//                clipImg.src = clipImgBase64
+//                 }
                     }
                          }
   
                 function getInputUrl(){
+                   
+                    processing();
                     var value = document.getElementById("inputurl").value
                  //   console.log(value);
 //                    displayInput(value);
@@ -311,19 +313,19 @@
                     var baseStr = value.slice(startNum);
                     goFile(encodeURIComponent(baseStr), value);
                     }else{
+                      
                        toDataURL(value, function(dataUrl) {
                             var startNum = dataUrl.indexOf("base64,");
                     startNum = startNum*1 + 7;
                     var baseStr = dataUrl.slice(startNum);
                     goFile(encodeURIComponent(baseStr), dataUrl);
+                
                        })
-                      
-                       
                     }
-                   
                 }   
                         
                 function toDataURL(url, callback) {
+                    
                     var xhr = new XMLHttpRequest();
                     xhr.onload = function() {
                     var reader = new FileReader();
@@ -335,6 +337,7 @@
                     xhr.open('GET', url);
                     xhr.responseType = 'blob';
                     xhr.send();
+                  
                     }
                         
                 function processing(){
@@ -358,8 +361,8 @@
                             data: postData,            
                             success: function(response){ 
                                 select(response, image_url);
-                                console.log(response);
-                                getjson(response);
+                                console.log(response, image_url);
+                                getjson(response, image_url);
                                 finishProcess();
                             },            
                             error: function(error){                
@@ -384,7 +387,7 @@
                             success: function(response){ 
                                 select(response, file_raw);
                                 console.log(response);
-                                getjson(response);
+                                getjson(response, file_raw);
                                 finishProcess();
                             },            
                             error: function(error){                
@@ -413,39 +416,79 @@
                     }   
                         
                         
-                    function getjson(data){
+                    function getjson(data, url){
                          document.getElementById('dataarea').innerHTML = "";
-                        console.log(data.faces[0].attributes);
+                        
                         for( i = 0 ; i < data.faces.length ; i++ ){
                             
+                            if(data.faces[i].attributes){
+                              (function(a){
+                            setTimeout(function(){   
+                             var x = data.faces[a].face_rectangle.left;
+                             var y = data.faces[a].face_rectangle.top;
+                             var width = data.faces[a].face_rectangle.width;
+                             var height = data.faces[a].face_rectangle.height;
                             
+                             
+                            var canvas = document.createElement('canvas'); 
+                            canvas.id = "canvasId"+a; 
+                            canvas.width = 100; 
+                            canvas.height = 100; 
+                            canvas.style.border = "2px solid black";
+                            document.getElementById("dataarea").appendChild(canvas);
+                           
+                                var img = new Image()
+                                img.src = url;
+                                var can = document.getElementById("canvasId"+a)
+                                var ctx = can.getContext("2d")
+                                img.onload = function(){
+                               
+                                ctx.drawImage(img,x,y,width,height,0,0,100,100)
+                                }
+                              
+                                
                              var text = document.createElement("p");
-                             text.innerHTML = "<font size=4 color=black>age: "+data.faces[i].attributes.age.value
+                             text.innerHTML = "<font size=4 color=black>age: "+data.faces[a].attributes.age.value
                                 +'<br>';
                              document.getElementById("dataarea").appendChild(text);
                             
                             var text0 = document.createElement("p");
-                            text0.innerHTML = "<font size=4 color=black>gender: "+data.faces[i].attributes.gender.value+'<br>';
+                            text0.innerHTML = "<font size=4 color=black>gender: "+data.faces[a].attributes.gender.value+'<br>';
                             document.getElementById("dataarea").appendChild(text0);
                             
                             var text1 = document.createElement("p");
-                            if(data.faces[i].attributes.gender.value == 'Male')
-                                text1.innerHTML = "<font size=4 color=black>beauty: "+data.faces[i].attributes.beauty.male_score+'<br>';
+                            if(data.faces[a].attributes.gender.value == 'Male')
+                                text1.innerHTML = "<font size=4 color=black>beauty: "+data.faces[a].attributes.beauty.male_score+'<br>';
                             else
-                                text1.innerHTML = "<font size=4 color=black>beauty: "+data.faces[i].attributes.beauty.female_score+'<br>';
+                                text1.innerHTML = "<font size=4 color=black>beauty: "+data.faces[a].attributes.beauty.female_score+'<br>';
                               document.getElementById("dataarea").appendChild(text1);
                             
                              var text2 = document.createElement("p");
-                            if( data.faces[i].attributes.glass.value == 'None')
-                                 text2.innerHTML = "<font size=4 color=black>glass: "+"no"+'<br>'+'<br>';
+                            if( data.faces[a].attributes.glass.value == 'None')
+                                 text2.innerHTML = "<font size=4 color=black>glass: "+"no"+'<br>';
                             else
-                                text2.innerHTML = "<font size=4 color=black>glass: "+"yes"+'<br>'+'<br>';
+                                text2.innerHTML = "<font size=4 color=black>glass: "+"yes"+'<br>';
                               document.getElementById("dataarea").appendChild(text2);
-
-                        }
+                            
+                             var text5 = document.createElement("p");
+                             text5.innerHTML = "<font size=4 color=black>smile: "+'<br>'+'<font size=3 color=black>&nbsp;&nbsp;&nbsp;threshold: '+data.faces[a].attributes.smile.threshold+'&nbsp;&nbsp;&nbsp;value:'+data.faces[a].attributes.smile.value;
+                            document.getElementById("dataarea").appendChild(text5);
+                                
+                                
+                            var text3 = document.createElement("p");
+                                text3.innerHTML = "<font size=4 color=black>emotion: "+'<br>'+'<font size=3 color=black>&nbsp;&nbsp;&nbsp;anger: '+data.faces[a].attributes.emotion.anger+'&nbsp;&nbsp;&nbsp;disgust:'+data.faces[a].attributes.emotion.disgust+'<br>'+'&nbsp;&nbsp;&nbsp;fear: '+data.faces[a].attributes.emotion.fear+'&nbsp;&nbsp;&nbsp;happiness: '+data.faces[a].attributes.emotion.happiness+'<br>'+'&nbsp;&nbsp;&nbsp;neutral: '+data.faces[a].attributes.emotion.neutral+'&nbsp;&nbsp;&nbsp;sadness: '+data.faces[a].attributes.emotion.sadness+'<br>'+'&nbsp;&nbsp;&nbsp;surprise: '+data.faces[a].attributes.emotion.surprise;
+                                document.getElementById("dataarea").appendChild(text3);
+                             
+                            var text4 = document.createElement("p");
+                             text4.innerHTML = "<font size=4 color=black>skinstatus: "+'<br>'+'<font size=3 color=black>&nbsp;&nbsp;&nbsp;acne: '+data.faces[a].attributes.skinstatus.acne+'&nbsp;&nbsp;&nbsp;dark_circle:'+data.faces[a].attributes.skinstatus.dark_circle+'<br>'+'&nbsp;&nbsp;&nbsp;health: '+data.faces[a].attributes.skinstatus.health+'&nbsp;&nbsp;&nbsp;stain: '+data.faces[a].attributes.skinstatus.stain;
+                            document.getElementById("dataarea").appendChild(text4);
                         
+                          }, 0);
+                            }(i))  
                     }
-
+                        }
+                    }
+                          
                     </script>
 
 		</div> 
@@ -491,6 +534,7 @@
 			$('#wrapper').toggleClass('toggled');
 	  });  
 	});
+   
 </script>
 
 
