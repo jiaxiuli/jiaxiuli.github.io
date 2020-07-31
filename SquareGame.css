@@ -1,0 +1,32 @@
+#container{
+    width: 1000px;
+    height: 700px;
+    border: 1px solid black;
+    background-color: blanchedalmond;
+    margin: auto;
+}
+#play{
+    height: 100%;
+    width: 70%;
+    float: left;
+    border: 1px solid black;
+    text-align: center;
+}
+#record{
+    height: 100%;
+    width: 29%;
+    float: right;
+    text-align: center;
+    border: 1px solid black;
+}
+#tab{
+    margin-top: 50px;
+    border: 3px solid black;
+
+}
+#score{
+    font-size: 40px;
+}
+#bonus{
+    font-size: 30px;
+}
