@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: #f7b5ce;
+    }
+    .div{
+        width: 300px;
+        height: 200px;
+        border: 4px solid orange;
+        background-color: #bfa;
+        left: 600px;
+        top: 200px;
+        border-radius: 50px;
+        position: relative;
+    }
+    #btn1{
+        width: 70px;
+        height: 30px;
+        left: 50px;
+        bottom: 50px;
+        border: 2px solid orange;
+        border-radius: 20px;
+        background-color: gray;
+        position: absolute;
+    }
+    #btn2{
+        width: 70px;
+        height: 30px;
+        right: 50px;
+        bottom: 50px;
+        border: 2px solid orange;
+        background-color: gray;
+        border-radius: 20px;
+        position: absolute;
+    }
+    h1{
+        display: none;
+        position: fixed;
+        margin-left: 200px;
+        margin-top: 100px;
+    }
+</style>
+<body>
+    <h1>抓不到我 嘻嘻嘻~~~</h1>
+    <div class="div">
+        <p style="text-align: center; margin-top: 50px;">你是小可爱吗？</p>
+        <button id="btn1">是</button>
+        <button id="btn2">不是</button>
+    </div>
+</body>
+<script crossorigin="anonymous" integrity="sha384-gwskTDRpKgp0b8KeTMEfiPCRDmNqpY2TGo7y+gyJhUGHlY1VfeXQTE4Ym3R+uXOi" src="//lib.baomitu.com/jquery/1.10.1/jquery.js"></script>
+<script>
+    var $div = $('div');
+    var $btn1 = $('#btn1');
+    var $btn2 = $('#btn2');
+
+    setTimeout(function(){
+        $('h1').fadeIn(3000).fadeOut(3000);
+    }, 10000);
+    $btn1.hover(function(){
+        var num = randomNum(1, 6);
+        var left = randomNum(50, 200);
+        var top = randomNum(50, 200);
+        if($div.position().top < 100) num = 2;
+        if($div.position().left < 100) num = 1;
+        if($div.position().left > 1000) num = 3;
+        if($div.position().top > 600) num = 4;
+        console.log('left: '+ $div.position().left);
+        console.log('top: '+ $div.position().top);
+        console.log('right: '+ $div.position().right);
+        console.log('bottom: '+ $div.position().bottom);
+        switch(num){
+            case 1: $div.animate({left: '+='+left}, 400);break;
+            case 2: $div.animate({top: '+='+top}, 400);break;
+            case 3: $div.animate({left: '-='+left}, 400);break;
+            case 4: $div.animate({top: '-='+top}, 400);break;
+            case 5: $div.animate({left: '+='+left, top: '+='+top}, 400);break;
+            case 6: $div.animate({left: '-='+left, top: '-='+top}, 400);break;
+            case 7: $div.animate({left: '-='+left, top: '+='+top}, 400);break;
+            case 8: $div.animate({left: '+='+left, top: '-='+top}, 400);break;
+        }
+        
+    }, function(){});
+    $btn1.click(function(){
+        alert('你抓到我了~~~');
+    });
+    $btn2.click(function(){
+        alert('那么快就承认不是小可爱了吗！');
+    });
+    function randomNum(minNum,maxNum){ 
+    switch(arguments.length){ 
+        case 1: 
+            return parseInt(Math.random()*minNum+1,10); 
+        break; 
+        case 2: 
+            return parseInt(Math.random()*(maxNum-minNum+1)+minNum,10); 
+        break; 
+            default: 
+                return 0; 
+            break; 
+    } 
+} 
+</script>
+</html>
